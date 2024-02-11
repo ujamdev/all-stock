@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
 class Server {
@@ -23,6 +23,16 @@ async function initialize(): Promise<void> {
   const application = await NestFactory.create<NestExpressApplication>(
     AppModule,
   );
+
+  application.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      forbidUnknownValues: false,
+      transform: true,
+    }),
+  );
+
   const server = new Server(application);
 
   await server.bootstrap();
