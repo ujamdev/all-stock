@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { FindCalculateService } from '../src/domains/calculate/application/find.calculate.service';
-import { Purchase } from '../src/domains/calculate/domain/purchase';
-import { GetCalculateAveragePriceResponse } from '../src/domains/calculate/domain/get.calculate.average.price.response';
+import { FindCalculateService } from '../../../../src/domains/calculate/application/find.calculate.service';
+import { Purchase } from '../../../../src/domains/calculate/domain/purchase';
+import { GetCalculateAveragePriceResponse } from '../../../../src/domains/calculate/domain/get.calculate.average.price.response';
 
 describe('FindCalculateService', () => {
   let service: FindCalculateService;
@@ -19,24 +19,26 @@ describe('FindCalculateService', () => {
   });
 
   describe('getCalculateAveragePrice', () => {
-    const purchaseList = [
-      { price: 1530, quantity: 127 },
-      { price: 1470, quantity: 245 },
-      { price: 1320, quantity: 312 },
-    ] as Purchase[];
+    it('단가와 수량 정보들을 계산하여 평균단가, 수량, 매입금액을 반환한다.', async () => {
+      //given
+      const purchaseList = [
+        { price: 1530, quantity: 127 },
+        { price: 1470, quantity: 245 },
+        { price: 1320, quantity: 312 },
+      ] as Purchase[];
 
-    const response = {
-      averagePrice: 1412.72,
-      quantity: 684,
-      purchasePrice: 966300,
-    } as GetCalculateAveragePriceResponse;
+      const response = {
+        averagePrice: 1412.72,
+        quantity: 684,
+        purchasePrice: 966300,
+      } as GetCalculateAveragePriceResponse;
 
-    it('should calculate average price', async () => {
-      jest
-        .spyOn(service, 'getCalculateAveragePrice')
-        .mockResolvedValue(response);
+      //when
+      const result = await service.getCalculateAveragePrice({
+        purchaseList,
+      });
 
-      const result = await service.getCalculateAveragePrice({ purchaseList });
+      //then
       expect(result).toEqual(response);
     });
   });
