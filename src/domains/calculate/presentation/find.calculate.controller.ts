@@ -8,7 +8,7 @@ export class FindCalculateController {
   constructor(private readonly findCalculateService: FindCalculateService) {}
 
   /**
-   * 보유 주식 평균단가를 계산한다.
+   * 보유 주식 평균단가, 수량, 매입금액을 계산한다.
    * @param {GetCalculateAveragePriceRequest} request - 평균 단가 계산에 필요한 요청 데이터
    * @return {Promise<GetCalculateAveragePriceResponse>} - 평균 단가 계산 결과 응답 데이터
    */
