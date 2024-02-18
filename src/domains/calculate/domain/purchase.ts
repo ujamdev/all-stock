@@ -7,5 +7,5 @@ export class Purchase {
 
   @IsNumber()
   @IsNotEmpty()
-  quantity;
+  quantity: number;
 }

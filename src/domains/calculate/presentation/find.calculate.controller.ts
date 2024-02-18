@@ -2,6 +2,8 @@ import { Controller, Get, Query } from '@nestjs/common';
 import { FindCalculateService } from '../application/find.calculate.service';
 import { GetCalculateAveragePriceRequest } from '../domain/get.calculate.average.price.request';
 import { GetCalculateAveragePriceResponse } from '../domain/get.calculate.average.price.response';
+import { GetCalculateQuantityRequest } from '../domain/get.calculate.quantity.request';
+import { GetCalculateQuantityResponse } from '../domain/get.calculate.quantity.response';
 
 @Controller('calculate')
 export class FindCalculateController {
@@ -17,5 +19,17 @@ export class FindCalculateController {
     @Query() request: GetCalculateAveragePriceRequest,
   ): Promise<GetCalculateAveragePriceResponse> {
     return await this.findCalculateService.getCalculateAveragePrice(request);
+  }
+
+  /**
+   * 매수할 수 있는 수량을 계산한다.
+   * @param {GetCalculateQuantityRequest} request - 수량 계산에 필요한 요청 데이터
+   * @return {Promise<GetCalculateQuantityResponse>} - 수량 계산 결과 응답 데이터
+   */
+  @Get('quantity')
+  async getCalculateQuantity(
+    @Query() request: GetCalculateQuantityRequest,
+  ): Promise<GetCalculateQuantityResponse> {
+    return await this.findCalculateService.getCalculateQuantity(request);
   }
 }
