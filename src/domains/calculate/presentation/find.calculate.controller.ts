@@ -4,6 +4,8 @@ import { GetCalculateAveragePriceRequest } from '../domain/get.calculate.average
 import { GetCalculateAveragePriceResponse } from '../domain/get.calculate.average.price.response';
 import { GetCalculateQuantityRequest } from '../domain/get.calculate.quantity.request';
 import { GetCalculateQuantityResponse } from '../domain/get.calculate.quantity.response';
+import { GetCalculateCompoundInterestResponse } from '../domain/get.calculate.compound.interest.response';
+import { GetCalculateCompoundInterestRequest } from '../domain/get.calculate.compound.interest.request';
 
 @Controller('calculate')
 export class FindCalculateController {
@@ -31,5 +33,19 @@ export class FindCalculateController {
     @Query() request: GetCalculateQuantityRequest,
   ): Promise<GetCalculateQuantityResponse> {
     return await this.findCalculateService.getCalculateQuantity(request);
+  }
+
+  /**
+   * 복리를 계산한다.
+   * @param {GetCalculateCompoundInterestRequest} request - 복리 계산에 필요한 요청 데이터
+   * @return {Promise<GetCalculateCompoundInterestResponse[]>} - 복리 계산 결과 응답 데이터
+   */
+  @Get('compound-interest')
+  async getCalculateCompoundInterest(
+    @Query() request: GetCalculateCompoundInterestRequest,
+  ): Promise<GetCalculateCompoundInterestResponse[]> {
+    return await this.findCalculateService.getCalculateCompoundInterest(
+      request,
+    );
   }
 }
