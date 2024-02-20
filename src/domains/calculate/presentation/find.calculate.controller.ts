@@ -16,7 +16,7 @@ export class FindCalculateController {
    * @param {GetCalculateAveragePriceRequest} request - 평균 단가 계산에 필요한 요청 데이터
    * @return {Promise<GetCalculateAveragePriceResponse>} - 평균 단가 계산 결과 응답 데이터
    */
-  @Get('average-price')
+  @Get('/average-price')
   async getCalculateAveragePrice(
     @Query() request: GetCalculateAveragePriceRequest,
   ): Promise<GetCalculateAveragePriceResponse> {
@@ -28,7 +28,7 @@ export class FindCalculateController {
    * @param {GetCalculateQuantityRequest} request - 수량 계산에 필요한 요청 데이터
    * @return {Promise<GetCalculateQuantityResponse>} - 수량 계산 결과 응답 데이터
    */
-  @Get('quantity')
+  @Get('/quantity')
   async getCalculateQuantity(
     @Query() request: GetCalculateQuantityRequest,
   ): Promise<GetCalculateQuantityResponse> {
@@ -36,11 +36,23 @@ export class FindCalculateController {
   }
 
   /**
+   * 단리를 계산한다.
+   * @param {GetCalculateCompoundInterestRequest} request - 단리 계산에 필요한 요청 데이터
+   * @return {Promise<GetCalculateCompoundInterestResponse[]>} - 단리 계산 결과 응답 데이터
+   */
+  @Get('/simple-interest')
+  async getCalculateSimpleInterest(
+    @Query() request: GetCalculateCompoundInterestRequest,
+  ): Promise<GetCalculateCompoundInterestResponse[]> {
+    return await this.findCalculateService.getCalculateSimpleInterest(request);
+  }
+
+  /**
    * 복리를 계산한다.
    * @param {GetCalculateCompoundInterestRequest} request - 복리 계산에 필요한 요청 데이터
    * @return {Promise<GetCalculateCompoundInterestResponse[]>} - 복리 계산 결과 응답 데이터
    */
-  @Get('compound-interest')
+  @Get('/compound-interest')
   async getCalculateCompoundInterest(
     @Query() request: GetCalculateCompoundInterestRequest,
   ): Promise<GetCalculateCompoundInterestResponse[]> {
