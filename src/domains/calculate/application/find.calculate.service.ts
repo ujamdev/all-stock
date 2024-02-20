@@ -30,6 +30,34 @@ export class FindCalculateService {
     });
   }
 
+  async getCalculateSimpleInterest(
+    request: GetCalculateCompoundInterestRequest,
+  ): Promise<GetCalculateCompoundInterestResponse[]> {
+    const { investmentAmount, period, periodUnit, revenueRate } = request;
+    const rate = revenueRate / 100;
+
+    let totalAmount = investmentAmount;
+    const simpleInterests = [];
+    for (let i = 1; i <= period; i++) {
+      const interestAmount = investmentAmount * rate;
+      totalAmount += interestAmount;
+
+      const interestRate =
+        ((totalAmount - investmentAmount) / investmentAmount) * 100;
+
+      simpleInterests.push(
+        GetCalculateCompoundInterestResponse.of({
+          period: `${i}${PeriodUnitToKorean[periodUnit]}`,
+          revenue: +interestAmount.toFixed(0),
+          amount: +totalAmount.toFixed(0),
+          revenueRate: `${interestRate.toFixed(2)}%`,
+        }),
+      );
+    }
+
+    return simpleInterests;
+  }
+
   async getCalculateCompoundInterest(
     request: GetCalculateCompoundInterestRequest,
   ): Promise<GetCalculateCompoundInterestResponse[]> {
@@ -41,6 +69,7 @@ export class FindCalculateService {
     for (let i = 1; i <= period; i++) {
       const interestAmount = totalAmount * rate;
       totalAmount += interestAmount;
+
       const interestRate =
         ((totalAmount - investmentAmount) / investmentAmount) * 100;
 
